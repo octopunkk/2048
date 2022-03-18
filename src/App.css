@@ -1,38 +1,32 @@
 .App {
+  color: #1b4332;
+  font-family: "Cabin", sans-serif;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  font-size: 70px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Grid {
+  display: grid;
+  background-color: #74c69d;
+  border: #1b4332 solid 1px;
+  border-radius: 2%;
+  margin: auto;
+  width: 400px;
+  height: 400px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.Tile {
+  justify-self: stretch;
+  align-self: stretch;
+  background-color: #b7e4c7;
+  border-radius: 10%;
+  border: #1b4332 solid 1px;
+  margin: 10px;
+  text-align: center;
+  font-size: 40px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
