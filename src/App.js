@@ -5,52 +5,76 @@ import { useState, useEffect } from "react";
 
 function App() {
   let [tiles, setTiles] = useState([
-    { filled: false, value: 0, position: [1, 4] },
-    { filled: false, value: 0, position: [1, 1] },
-    { filled: false, value: 0, position: [1, 2] },
-    { filled: false, value: 0, position: [1, 3] },
-    { filled: false, value: 0, position: [2, 4] },
-    { filled: false, value: 0, position: [2, 1] },
-    { filled: false, value: 0, position: [2, 2] },
-    { filled: false, value: 0, position: [2, 3] },
-    { filled: false, value: 0, position: [3, 4] },
-    { filled: false, value: 0, position: [3, 1] },
-    { filled: false, value: 0, position: [3, 2] },
-    { filled: false, value: 0, position: [3, 3] },
-    { filled: false, value: 0, position: [4, 4] },
-    { filled: false, value: 0, position: [4, 1] },
-    { filled: false, value: 0, position: [4, 2] },
-    { filled: false, value: 0, position: [4, 3] },
+    [null, null, null, null],
+    [null, null, null, null],
+    [null, null, null, null],
+    [null, null, null, null],
   ]);
   let getEmptyTiles = () => {
-    let empties = [];
-    tiles.forEach((tile, index) => {
-      if (!tile.filled) {
-        empties.push(index);
-      }
+    let empty = [];
+    tiles.forEach((row, rowIndex) => {
+      row.forEach((tile, columnIndex) => {
+        if (!tile) {
+          empty.push([rowIndex, columnIndex]);
+        }
+      });
     });
-    return empties;
+    return empty;
   };
 
   let generateNewTile = () => {
-    let empties = getEmptyTiles();
-    let randIndex = empties[Math.floor(empties.length * Math.random())];
+    let empty = getEmptyTiles();
+    let randIndex = empty[Math.floor(empty.length * Math.random())];
     let randValue = Math.floor(Math.random() * 2) === 0 ? 2 : 4;
     setTiles((prev) => {
+      console.log("setting tiles");
       let newTiles = [...prev];
-      let position = newTiles[randIndex].position;
-      newTiles[randIndex] = {
-        filled: true,
-        value: randValue,
-        position: position,
-      };
+      newTiles[randIndex[0]][randIndex[1]] = randValue;
       return newTiles;
     });
+  };
+  let moveTiles = (direction) => {
+    let newTiles = [
+      [null, null, null, null],
+      [null, null, null, null],
+      [null, null, null, null],
+      [null, null, null, null],
+    ];
+    switch (direction) {
+      case "up":
+        console.log(JSON.stringify(tiles));
+
+        for (let i = 0; i <= 3; i++) {
+          for (let j = 0; j <= 3; j++) {
+            console.log(`checking column ${j}, row ${i}`);
+            console.log(tiles[i][j]);
+            if (tiles[i][j]) {
+              console.log(`found tile !`);
+              // bloc: {
+              //   for (let c = 0; c <= 3; c++) {
+              //     console.log(
+              //       `checking for free space at column ${j}, row ${c}`
+              //     );
+              //     if (!newTiles[c][j]) {
+              //       console.log(`found some free space !`);
+              //       newTiles[c][j] = tiles[i][j];
+              //       console.log(`new tiles is now : ${newTiles}`);
+              //       console.log({ tiles });
+              //       break bloc;
+              //     }
+              //   }
+              // }
+            }
+          }
+        }
+    }
+    // setTiles(newTiles);
   };
 
   useEffect(() => {
     generateNewTile();
     generateNewTile();
+    moveTiles("up");
   }, []);
 
   return (

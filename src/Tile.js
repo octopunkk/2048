@@ -3,11 +3,11 @@ export const Tile = (props) => {
     <div
       className="Tile"
       style={{
-        gridRow: props.tile.position[0],
-        gridColumn: props.tile.position[1],
+        gridRow: props.rowIndex + 1,
+        gridColumn: props.columnIndex + 1,
       }}
     >
-      {props.tile.filled && props.tile.value}
+      {props.tile}
     </div>
   );
 };
