@@ -35,6 +35,22 @@ let initTiles = () => {
   return newTiles;
 };
 
+let pathIsClear = (line, index1, index2) => {
+  //line means row or column
+  //always have index1 < index2
+  if (index1 > index2) {
+    let tmp = index1;
+    index1 = index2;
+    index2 = tmp;
+  }
+  for (let i = index1 + 1; i < index2; i++) {
+    if (line[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+
 let moveTiles = (direction, tiles) => {
   let newTiles = [
     [null, null, null, null],
@@ -50,11 +66,18 @@ let moveTiles = (direction, tiles) => {
           if (tiles[i][j]) {
             // found tile !
             bloc: {
+              let line = [tiles[0][j], tiles[1][j], tiles[2][j], tiles[3][j]];
               for (let c = 0; c <= 3; c++) {
                 // checking for free space at column ${j}, row ${c}
                 if (!newTiles[c][j]) {
                   // found some free space !
                   newTiles[c][j] = tiles[i][j];
+                  break bloc;
+                } else if (
+                  newTiles[c][j] === tiles[i][j] &&
+                  pathIsClear(line, c, i)
+                ) {
+                  newTiles[c][j] += newTiles[c][j];
                   break bloc;
                 }
               }
@@ -68,9 +91,16 @@ let moveTiles = (direction, tiles) => {
         for (let j = 3; j >= 0; j--) {
           if (tiles[i][j]) {
             bloc: {
+              let line = [tiles[0][j], tiles[1][j], tiles[2][j], tiles[3][j]];
               for (let c = 3; c >= 0; c--) {
                 if (!newTiles[c][j]) {
                   newTiles[c][j] = tiles[i][j];
+                  break bloc;
+                } else if (
+                  newTiles[c][j] === tiles[i][j] &&
+                  pathIsClear(line, c, i)
+                ) {
+                  newTiles[c][j] += newTiles[c][j];
                   break bloc;
                 }
               }
@@ -88,6 +118,12 @@ let moveTiles = (direction, tiles) => {
                 if (!newTiles[j][c]) {
                   newTiles[j][c] = tiles[j][i];
                   break bloc;
+                } else if (
+                  newTiles[j][c] === tiles[j][i] &&
+                  pathIsClear(tiles[j], c, i)
+                ) {
+                  newTiles[j][c] += newTiles[j][c];
+                  break bloc;
                 }
               }
             }
@@ -104,6 +140,12 @@ let moveTiles = (direction, tiles) => {
                 if (!newTiles[j][c]) {
                   newTiles[j][c] = tiles[j][i];
                   break bloc;
+                } else if (
+                  newTiles[j][c] === tiles[j][i] &&
+                  pathIsClear(tiles[j], c, i)
+                ) {
+                  newTiles[j][c] += newTiles[j][c];
+                  break bloc;
                 }
               }
             }
@@ -115,8 +157,33 @@ let moveTiles = (direction, tiles) => {
   return newTiles;
 };
 
+let neighborsCheck = (tiles) => {
+  for (let i = 0; i <= 3; i++) {
+    for (let j = 0; j <= 3; j++) {
+      if (i !== 0 && tiles[i - 1][j] === tiles[i][j]) {
+        return false;
+      }
+      if (j !== 0 && tiles[i][j - 1] === tiles[i][j]) {
+        return false;
+      }
+      if (i !== 3 && tiles[i + 1][j] === tiles[i][j]) {
+        return false;
+      }
+      if (j !== 3 && tiles[i][j + 1] === tiles[i][j]) {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
+let gameOverCheck = (tiles) => {
+  return getEmptyTiles(tiles).length === 0 && neighborsCheck(tiles);
+};
+
 function App() {
   let [tiles, setTiles] = useState(initTiles());
+  let [gameover, setGameover] = useState(false);
 
   const keyHandler = (event) => {
     if (event.key === "ArrowUp") {
@@ -148,9 +215,13 @@ function App() {
       document.removeEventListener("keydown", keyHandler, false);
     };
   });
+  useEffect(() => {
+    setGameover(gameOverCheck(tiles));
+  }, [tiles]);
   return (
     <div className="App">
       <h1>2048</h1>
+      {gameover && <h2>Game Over !</h2>}
       <Grid tiles={tiles} />
     </div>
   );
