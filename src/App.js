@@ -171,7 +171,6 @@ let moveTiles = (direction, tiles) => {
       break;
     default:
       return;
-      break;
   }
   return newTiles;
 };
