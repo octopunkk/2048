@@ -181,6 +181,10 @@ let gameOverCheck = (tiles) => {
   return getEmptyTiles(tiles).length === 0 && neighborsCheck(tiles);
 };
 
+let gridsAreDifferent = (tiles1, tiles2) => {
+  return JSON.stringify(tiles1) !== JSON.stringify(tiles2);
+};
+
 function App() {
   let [tiles, setTiles] = useState(initTiles());
   let [gameover, setGameover] = useState(false);
@@ -188,23 +192,31 @@ function App() {
   const keyHandler = (event) => {
     if (event.key === "ArrowUp") {
       let newTiles = moveTiles("up", tiles);
-      let newnewTiles = generateNewTile(newTiles);
-      setTiles(newnewTiles);
+      if (gridsAreDifferent(tiles, newTiles)) {
+        let newnewTiles = generateNewTile(newTiles);
+        setTiles(newnewTiles);
+      }
     }
     if (event.key === "ArrowDown") {
       let newTiles = moveTiles("down", tiles);
-      let newnewTiles = generateNewTile(newTiles);
-      setTiles(newnewTiles);
+      if (gridsAreDifferent(tiles, newTiles)) {
+        let newnewTiles = generateNewTile(newTiles);
+        setTiles(newnewTiles);
+      }
     }
     if (event.key === "ArrowLeft") {
       let newTiles = moveTiles("left", tiles);
-      let newnewTiles = generateNewTile(newTiles);
-      setTiles(newnewTiles);
+      if (gridsAreDifferent(tiles, newTiles)) {
+        let newnewTiles = generateNewTile(newTiles);
+        setTiles(newnewTiles);
+      }
     }
     if (event.key === "ArrowRight") {
       let newTiles = moveTiles("right", tiles);
-      let newnewTiles = generateNewTile(newTiles);
-      setTiles(newnewTiles);
+      if (gridsAreDifferent(tiles, newTiles)) {
+        let newnewTiles = generateNewTile(newTiles);
+        setTiles(newnewTiles);
+      }
     }
   };
 
