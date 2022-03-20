@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { Grid } from "./Grid";
 import { Score } from "./Score";
@@ -8,6 +7,8 @@ let score = 0;
 if (!localStorage.getItem("hiscore")) {
   localStorage.setItem("hiscore", 0);
 }
+let touchX = null;
+let touchY = null;
 
 let getEmptyTiles = (tiles) => {
   let empty = [];
@@ -214,6 +215,58 @@ function App() {
     score = 0;
     setTiles(initTiles());
   };
+  let process_touchstart = (e) => {
+    document.addEventListener("touchend", process_touchend, false);
+    touchX = e.touches[0].clientX;
+    touchY = e.touches[0].clientY;
+  };
+  let process_touchend = (e) => {
+    document.removeEventListener("touchend", process_touchend, false);
+    let diffX = touchX - e.changedTouches[0].clientX;
+    let diffY = touchY - e.changedTouches[0].clientY;
+    console.log({ diffX, diffY });
+
+    if (Math.abs(diffX) < 10 && Math.abs(diffY) < 10) {
+      //didn't move
+      return;
+    }
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      //x movement
+      if (diffX > 0) {
+        //left
+        let newTiles = moveTiles("left", tiles);
+        if (gridsAreDifferent(tiles, newTiles)) {
+          let newnewTiles = generateNewTile(newTiles);
+          setTiles(newnewTiles);
+        }
+      } else {
+        //right
+        let newTiles = moveTiles("right", tiles);
+        if (gridsAreDifferent(tiles, newTiles)) {
+          let newnewTiles = generateNewTile(newTiles);
+          setTiles(newnewTiles);
+        }
+      }
+    }
+    if (Math.abs(diffX) < Math.abs(diffY)) {
+      //y movement
+      if (diffY > 0) {
+        //up
+        let newTiles = moveTiles("up", tiles);
+        if (gridsAreDifferent(tiles, newTiles)) {
+          let newnewTiles = generateNewTile(newTiles);
+          setTiles(newnewTiles);
+        }
+      } else {
+        //down
+        let newTiles = moveTiles("down", tiles);
+        if (gridsAreDifferent(tiles, newTiles)) {
+          let newnewTiles = generateNewTile(newTiles);
+          setTiles(newnewTiles);
+        }
+      }
+    }
+  };
 
   const keyHandler = (event) => {
     if (event.key === "ArrowUp") {
@@ -248,9 +301,11 @@ function App() {
 
   useEffect(() => {
     document.addEventListener("keydown", keyHandler, false);
+    document.addEventListener("touchstart", process_touchstart, false);
 
     return () => {
       document.removeEventListener("keydown", keyHandler, false);
+      document.removeEventListener("touchstart", process_touchstart, false);
     };
   });
   useEffect(() => {
