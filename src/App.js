@@ -72,25 +72,24 @@ let moveTiles = (direction, tiles) => {
           // checking column ${j}, row ${i}
           if (tiles[i][j]) {
             // found tile !
-            bloc: {
-              let line = [tiles[0][j], tiles[1][j], tiles[2][j], tiles[3][j]];
-              for (let c = 0; c <= 3; c++) {
-                // checking for free space at column ${j}, row ${c}
-                if (!newTiles[c][j]) {
-                  // found some free space !
-                  newTiles[c][j] = tiles[i][j];
-                  break bloc;
-                } else if (
-                  newTiles[c][j] === tiles[i][j] &&
-                  pathIsClear(line, c, i)
-                ) {
-                  newTiles[c][j] += newTiles[c][j];
-                  score += newTiles[c][j];
-                  if (score > parseInt(localStorage.getItem("hiscore"))) {
-                    localStorage.setItem("hiscore", score);
-                  }
-                  break bloc;
+
+            let line = [tiles[0][j], tiles[1][j], tiles[2][j], tiles[3][j]];
+            for (let c = 0; c <= 3; c++) {
+              // checking for free space at column ${j}, row ${c}
+              if (!newTiles[c][j]) {
+                // found some free space !
+                newTiles[c][j] = tiles[i][j];
+                break;
+              } else if (
+                newTiles[c][j] === tiles[i][j] &&
+                pathIsClear(line, c, i)
+              ) {
+                newTiles[c][j] += newTiles[c][j];
+                score += newTiles[c][j];
+                if (score > parseInt(localStorage.getItem("hiscore"))) {
+                  localStorage.setItem("hiscore", score);
                 }
+                break;
               }
             }
           }
@@ -101,23 +100,21 @@ let moveTiles = (direction, tiles) => {
       for (let i = 3; i >= 0; i--) {
         for (let j = 3; j >= 0; j--) {
           if (tiles[i][j]) {
-            bloc: {
-              let line = [tiles[0][j], tiles[1][j], tiles[2][j], tiles[3][j]];
-              for (let c = 3; c >= 0; c--) {
-                if (!newTiles[c][j]) {
-                  newTiles[c][j] = tiles[i][j];
-                  break bloc;
-                } else if (
-                  newTiles[c][j] === tiles[i][j] &&
-                  pathIsClear(line, c, i)
-                ) {
-                  newTiles[c][j] += newTiles[c][j];
-                  score += newTiles[c][j];
-                  if (score > parseInt(localStorage.getItem("hiscore"))) {
-                    localStorage.setItem("hiscore", score);
-                  }
-                  break bloc;
+            let line = [tiles[0][j], tiles[1][j], tiles[2][j], tiles[3][j]];
+            for (let c = 3; c >= 0; c--) {
+              if (!newTiles[c][j]) {
+                newTiles[c][j] = tiles[i][j];
+                break;
+              } else if (
+                newTiles[c][j] === tiles[i][j] &&
+                pathIsClear(line, c, i)
+              ) {
+                newTiles[c][j] += newTiles[c][j];
+                score += newTiles[c][j];
+                if (score > parseInt(localStorage.getItem("hiscore"))) {
+                  localStorage.setItem("hiscore", score);
                 }
+                break;
               }
             }
           }
@@ -128,22 +125,20 @@ let moveTiles = (direction, tiles) => {
       for (let i = 0; i <= 3; i++) {
         for (let j = 0; j <= 3; j++) {
           if (tiles[j][i]) {
-            bloc: {
-              for (let c = 0; c <= 3; c++) {
-                if (!newTiles[j][c]) {
-                  newTiles[j][c] = tiles[j][i];
-                  break bloc;
-                } else if (
-                  newTiles[j][c] === tiles[j][i] &&
-                  pathIsClear(tiles[j], c, i)
-                ) {
-                  newTiles[j][c] += newTiles[j][c];
-                  score += newTiles[j][c];
-                  if (score > parseInt(localStorage.getItem("hiscore"))) {
-                    localStorage.setItem("hiscore", score);
-                  }
-                  break bloc;
+            for (let c = 0; c <= 3; c++) {
+              if (!newTiles[j][c]) {
+                newTiles[j][c] = tiles[j][i];
+                break;
+              } else if (
+                newTiles[j][c] === tiles[j][i] &&
+                pathIsClear(tiles[j], c, i)
+              ) {
+                newTiles[j][c] += newTiles[j][c];
+                score += newTiles[j][c];
+                if (score > parseInt(localStorage.getItem("hiscore"))) {
+                  localStorage.setItem("hiscore", score);
                 }
+                break;
               }
             }
           }
@@ -154,27 +149,28 @@ let moveTiles = (direction, tiles) => {
       for (let i = 3; i >= 0; i--) {
         for (let j = 3; j >= 0; j--) {
           if (tiles[j][i]) {
-            bloc: {
-              for (let c = 3; c >= 0; c--) {
-                if (!newTiles[j][c]) {
-                  newTiles[j][c] = tiles[j][i];
-                  break bloc;
-                } else if (
-                  newTiles[j][c] === tiles[j][i] &&
-                  pathIsClear(tiles[j], c, i)
-                ) {
-                  newTiles[j][c] += newTiles[j][c];
-                  score += newTiles[j][c];
-                  if (score > parseInt(localStorage.getItem("hiscore"))) {
-                    localStorage.setItem("hiscore", score);
-                  }
-                  break bloc;
+            for (let c = 3; c >= 0; c--) {
+              if (!newTiles[j][c]) {
+                newTiles[j][c] = tiles[j][i];
+                break;
+              } else if (
+                newTiles[j][c] === tiles[j][i] &&
+                pathIsClear(tiles[j], c, i)
+              ) {
+                newTiles[j][c] += newTiles[j][c];
+                score += newTiles[j][c];
+                if (score > parseInt(localStorage.getItem("hiscore"))) {
+                  localStorage.setItem("hiscore", score);
                 }
+                break;
               }
             }
           }
         }
       }
+      break;
+    default:
+      return;
       break;
   }
   return newTiles;
