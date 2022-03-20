@@ -45,16 +45,21 @@ let initTiles = () => {
 let pathIsClear = (line, index1, index2) => {
   //line means row or column
   //always have index1 < index2
+  console.log(line);
+  console.log({ index1, index2 });
   if (index1 > index2) {
     let tmp = index1;
     index1 = index2;
     index2 = tmp;
   }
   for (let i = index1 + 1; i < index2; i++) {
+    console.log(line[i]);
     if (line[i]) {
+      console.log("false");
       return false;
     }
   }
+  console.log("true");
   return true;
 };
 
@@ -73,8 +78,14 @@ let moveTiles = (direction, tiles) => {
           if (tiles[i][j]) {
             // found tile !
 
-            let line = [tiles[0][j], tiles[1][j], tiles[2][j], tiles[3][j]];
             for (let c = 0; c <= 3; c++) {
+              let line = [
+                newTiles[0][j],
+                newTiles[1][j],
+                newTiles[2][j],
+                newTiles[3][j],
+              ];
+
               // checking for free space at column ${j}, row ${c}
               if (!newTiles[c][j]) {
                 // found some free space !
@@ -100,8 +111,14 @@ let moveTiles = (direction, tiles) => {
       for (let i = 3; i >= 0; i--) {
         for (let j = 3; j >= 0; j--) {
           if (tiles[i][j]) {
-            let line = [tiles[0][j], tiles[1][j], tiles[2][j], tiles[3][j]];
             for (let c = 3; c >= 0; c--) {
+              let line = [
+                newTiles[0][j],
+                newTiles[1][j],
+                newTiles[2][j],
+                newTiles[3][j],
+              ];
+
               if (!newTiles[c][j]) {
                 newTiles[c][j] = tiles[i][j];
                 break;
@@ -131,7 +148,7 @@ let moveTiles = (direction, tiles) => {
                 break;
               } else if (
                 newTiles[j][c] === tiles[j][i] &&
-                pathIsClear(tiles[j], c, i)
+                pathIsClear(newTiles[j], c, i)
               ) {
                 newTiles[j][c] += newTiles[j][c];
                 score += newTiles[j][c];
@@ -155,7 +172,7 @@ let moveTiles = (direction, tiles) => {
                 break;
               } else if (
                 newTiles[j][c] === tiles[j][i] &&
-                pathIsClear(tiles[j], c, i)
+                pathIsClear(newTiles[j], c, i)
               ) {
                 newTiles[j][c] += newTiles[j][c];
                 score += newTiles[j][c];
