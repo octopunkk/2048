@@ -337,6 +337,10 @@ function App() {
       </div>
       {gameover && <h2>Game Over !</h2>}
       <Grid tiles={tiles} />
+      <div className="filler_out">
+        <div className="filler_in"></div>
+        <p className="signature">Made with ❤️ by Anaïs, in Lyon</p>
+      </div>
     </div>
   );
 }

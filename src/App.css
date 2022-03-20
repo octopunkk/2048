@@ -1,5 +1,6 @@
 html,
-body {
+body,
+#root {
   margin: 0;
   height: 100%;
   overflow: hidden;
@@ -9,6 +10,7 @@ body {
   color: #1b4332;
   font-family: "Cabin", sans-serif;
   text-align: center;
+  height: 100%;
 }
 h1 {
   font-size: 70px;
@@ -71,6 +73,20 @@ h1 {
   width: 200px;
   border-radius: 5%;
   font-size: 20px;
+}
+.filler_out {
+  display: flex;
+  height: 90%;
+}
+.filler_in {
+  flex-grow: 1;
+}
+.signature {
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: center;
+  margin: auto;
+  width: 100%;
 }
 @media only screen and (max-width: 500px) {
   h1 {
