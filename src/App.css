@@ -30,3 +30,38 @@ h1 {
   align-items: center;
   justify-content: center;
 }
+.onTopOfGrid {
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.Score {
+  padding: 15px;
+  background-color: #b7e4c7;
+  display: flex;
+  width: 150px;
+  border-radius: 5%;
+  font-size: 20px;
+}
+.resetButton {
+  padding: 15px;
+  background-color: #b7e4c7;
+  display: flex;
+  width: 100px;
+  border-radius: 5%;
+  font-size: 20px;
+  justify-content: center;
+}
+.resetButton:hover {
+  cursor: pointer;
+}
+.HiScore {
+  padding: 15px;
+  background-color: #b7e4c7;
+  display: flex;
+  width: 200px;
+  border-radius: 5%;
+  font-size: 20px;
+}

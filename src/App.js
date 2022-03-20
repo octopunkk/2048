@@ -1,7 +1,13 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { Grid } from "./Grid";
+import { Score } from "./Score";
 import { useState, useEffect } from "react";
+
+let score = 0;
+if (!localStorage.getItem("hiscore")) {
+  localStorage.setItem("hiscore", 0);
+}
 
 let getEmptyTiles = (tiles) => {
   let empty = [];
@@ -78,6 +84,10 @@ let moveTiles = (direction, tiles) => {
                   pathIsClear(line, c, i)
                 ) {
                   newTiles[c][j] += newTiles[c][j];
+                  score += newTiles[c][j];
+                  if (score > parseInt(localStorage.getItem("hiscore"))) {
+                    localStorage.setItem("hiscore", score);
+                  }
                   break bloc;
                 }
               }
@@ -101,6 +111,10 @@ let moveTiles = (direction, tiles) => {
                   pathIsClear(line, c, i)
                 ) {
                   newTiles[c][j] += newTiles[c][j];
+                  score += newTiles[c][j];
+                  if (score > parseInt(localStorage.getItem("hiscore"))) {
+                    localStorage.setItem("hiscore", score);
+                  }
                   break bloc;
                 }
               }
@@ -123,6 +137,10 @@ let moveTiles = (direction, tiles) => {
                   pathIsClear(tiles[j], c, i)
                 ) {
                   newTiles[j][c] += newTiles[j][c];
+                  score += newTiles[j][c];
+                  if (score > parseInt(localStorage.getItem("hiscore"))) {
+                    localStorage.setItem("hiscore", score);
+                  }
                   break bloc;
                 }
               }
@@ -145,6 +163,10 @@ let moveTiles = (direction, tiles) => {
                   pathIsClear(tiles[j], c, i)
                 ) {
                   newTiles[j][c] += newTiles[j][c];
+                  score += newTiles[j][c];
+                  if (score > parseInt(localStorage.getItem("hiscore"))) {
+                    localStorage.setItem("hiscore", score);
+                  }
                   break bloc;
                 }
               }
@@ -188,6 +210,10 @@ let gridsAreDifferent = (tiles1, tiles2) => {
 function App() {
   let [tiles, setTiles] = useState(initTiles());
   let [gameover, setGameover] = useState(false);
+  let resetGame = () => {
+    score = 0;
+    setTiles(initTiles());
+  };
 
   const keyHandler = (event) => {
     if (event.key === "ArrowUp") {
@@ -233,6 +259,15 @@ function App() {
   return (
     <div className="App">
       <h1>2048</h1>
+      <div className="onTopOfGrid">
+        <div className="HiScore">
+          High Score : {localStorage.getItem("hiscore")}
+        </div>
+        <Score score={score} />
+        <div className="resetButton" onClick={resetGame}>
+          New Game
+        </div>
+      </div>
       {gameover && <h2>Game Over !</h2>}
       <Grid tiles={tiles} />
     </div>
