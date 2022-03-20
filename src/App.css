@@ -1,3 +1,10 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
 .App {
   color: #1b4332;
   font-family: "Cabin", sans-serif;
@@ -64,4 +71,26 @@ h1 {
   width: 200px;
   border-radius: 5%;
   font-size: 20px;
+}
+@media only screen and (max-width: 500px) {
+  h1 {
+    font-size: 50px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+  }
+  .HiScore {
+    font-size: 15px;
+    padding: 10px;
+    width: 150px;
+    align-items: center;
+  }
+  .Score {
+    font-size: 15px;
+    padding: 15px;
+    width: 100px;
+  }
+  .resetButton {
+    font-size: 15px;
+    padding: 15px;
+  }
 }
